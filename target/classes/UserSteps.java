@@ -1,28 +1,36 @@
-package net.michaelslab.demo.stepdefs;
+package net.michaelslab.demo.UserSteps;
 
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class Stepdefs {
+public class UserSteps {
     int my_cukes = 0;
     String url = "";
     WebDriver driver = null;
 
-    public Stepdefs() {
+    public void UserSteps() {
         System.setProperty("webdriver.chrome.driver","C:\\windriver\\chromedriver.exe");
 
         WebDriver driver = new ChromeDriver();
+        Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
+
+        String browserName = caps.getBrowserName();
+        System.out.println("browsername:" + browserName);
         this.driver = driver;
     }
 
     @When("open \"([^\"]*)\"$")
     public void open_page_by_url(String url) throws Throwable {
+        System.setProperty("webdriver.chrome.driver","C:\\windriver\\chromedriver.exe");
+        this.driver = new ChromeDriver();
+        //this.driver.getCapabilities();
         this.url = url;
         this.driver.get( "http:" + this.url + "");
     }
@@ -32,7 +40,6 @@ public class Stepdefs {
         WebElement input = this.driver.findElement( By.className("search-words") );
         input.sendKeys(text);
     }
-
 
     @Given("I have {int} cukes in my belly")
     public void i_have_n_cukes_in_my_belly(int cukes) {
