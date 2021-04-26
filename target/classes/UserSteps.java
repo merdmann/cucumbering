@@ -26,7 +26,7 @@ public class UserSteps {
         this.driver = driver;
     }
 
-    @When("open \"([^\"]*)\"$")
+    @When("open {string}")
     public void open_page_by_url(String url) throws Throwable {
         System.setProperty("webdriver.chrome.driver","C:\\windriver\\chromedriver.exe");
         this.driver = new ChromeDriver();
@@ -35,10 +35,12 @@ public class UserSteps {
         this.driver.get( "http:" + this.url + "");
     }
 
-    @When("find \"([^\"]*)\"$")
+    @When("find {string}")
     public void search_for(String text) throws Throwable {
         WebElement input = this.driver.findElement( By.className("search-words") );
         input.sendKeys(text);
+        this.driver.findElement( By.name("search") ).click();
+
     }
 
     @Given("I have {int} cukes in my belly")
