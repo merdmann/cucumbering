@@ -10,49 +10,60 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import org.junit.runner.RunWith;
+import cucumber.api.CucumberOptions;
+import cucumber.api.junit.Cucumber;
+
+@CucumberOptions(
+        Features = "src/test/java/com/Features",
+        glue = "com.StepDefinitions",
+        Tags = { "~@wip","~@notImplemented","@sanity" },
+        dryRun = false,
+        strict = true,
+        monochrome = true,
+        plugin = { "progress" }
+)
 public class UserSteps {
-    int my_cukes = 0;
     String url = "";
     WebDriver driver = null;
+    Capabilities caps = null;
+    String browserName = "";
 
     public void UserSteps() {
+        System.out.println("UserSteps()");
         System.setProperty("webdriver.chrome.driver","C:\\windriver\\chromedriver.exe");
-
         WebDriver driver = new ChromeDriver();
-        Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
-
-        String browserName = caps.getBrowserName();
-        System.out.println("browsername:" + browserName);
         this.driver = driver;
+        this.caps = ((RemoteWebDriver) driver).getCapabilities();
+
+        this.browserName = caps.getBrowserName();
     }
+
+    @Given("browser {string} available")
+    public void browser_available(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        Capabilities caps = ((RemoteWebDriver) this.driver).getCapabilities();
+        System.out.println( "BrowserName=" + caps.getBrowserName());
+        // throw new io.cucumber.java.PendingException();
+    }
+
 
     @When("open {string}")
     public void open_page_by_url(String url) throws Throwable {
         System.setProperty("webdriver.chrome.driver","C:\\windriver\\chromedriver.exe");
         this.driver = new ChromeDriver();
-        //this.driver.getCapabilities();
         this.url = url;
         this.driver.get( "http:" + this.url + "");
     }
 
-    @When("find {string}")
+    @Then("find {string}")
     public void search_for(String text) throws Throwable {
         WebElement input = this.driver.findElement( By.className("search-words") );
         input.sendKeys(text);
         this.driver.findElement( By.name("search") ).click();
+
     }
 
-    @Given("I have {int} cukes in my belly")
-    public void i_have_n_cukes_in_my_belly(int cukes) {
-        this.my_cukes = cukes;
-        System.out.format( "%n\n", cukes);
-    }
 
-    @Then("the answer is {int}")
-    public void the_answer_is(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        if( this.my_cukes != int1 )
-            throw new io.cucumber.java.PendingException();
-    }
 
 }
