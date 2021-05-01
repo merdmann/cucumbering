@@ -1,4 +1,4 @@
-package net.michaelslab.demo.UserSteps;
+package net.michaelslab.demo.TestRunner.stepdefs;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -11,18 +11,7 @@ import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import org.junit.runner.RunWith;
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
 
-@CucumberOptions(
-        Features = "src/test/java/com/Features",
-        glue = "com.StepDefinitions",
-        Tags = { "~@wip","~@notImplemented","@sanity" },
-        dryRun = false,
-        strict = true,
-        monochrome = true,
-        plugin = { "progress" }
-)
 public class UserSteps {
     String url = "";
     WebDriver driver = null;
